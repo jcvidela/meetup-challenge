@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity, Text, StyleSheet, ViewPropTypes } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const Button = ({ handlePress, text, style, disabled }) => {
   return (
@@ -39,7 +39,6 @@ Button.defaultProps = {
 Button.propTypes = {
   handlePress: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
-  style: PropTypes.ViewPropTypes,
   disabled: PropTypes.bool,
 };
 
