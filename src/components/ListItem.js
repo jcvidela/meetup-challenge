@@ -19,7 +19,7 @@ const ListItem = ({ item, expanded, handlePress }) => {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
             <View>
               <Text style={styles.words}>{capitalize(item.name)}</Text>
-              <Text style={{ color: 'gray', fontWeight: 'bold', fontSize: 12, marginTop: 10 }}>28/03/2000</Text>
+              <Text style={style.dateSkeleton}>DD/MM/YYYY</Text>
             </View>
             <Text style={styles.words}>...</Text>
           </View>
@@ -76,6 +76,12 @@ const styles = StyleSheet.create({
   icon: { 
     width: 40, 
     height: 40 
+  },
+  dateSkeleton: {
+    color: 'gray', 
+    fontWeight: 'bold', 
+    fontSize: 12, 
+    marginTop: 10
   }
 });
 
