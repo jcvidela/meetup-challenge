@@ -3,14 +3,39 @@ import PropTypes from 'prop-types';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card } from './';
 import { capitalize, computeStock } from '../helpers';
-import { useWeather } from '../hooks/useWeather';
+import api from '../api';
 
 import beerIcon from '../assets/beer.png';
 import guestsIcon from '../assets/guests.png';
 import weatherIcon from '../assets/weather.png';
 
 const ListItem = ({ item, expanded, handlePress }) => {
-  const { data, loading, error } = useWeather();
+  const [state, setState] = React.useState({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  const { data, loading, error } = state;
+
+  React.useEffect(() => {
+    api
+      .getWeather()
+      .then((data) =>
+        setState({
+          data,
+          loading: false,
+          error: null,
+        }),
+      )
+      .catch(() =>
+        setState({
+          data: null,
+          loadng: false,
+          error: 'Error getting weather',
+        }),
+      );
+  }, []);
 
   return (
     <View style={{ marginVertical: 10 }}>
@@ -19,7 +44,7 @@ const ListItem = ({ item, expanded, handlePress }) => {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
             <View>
               <Text style={styles.words}>{capitalize(item.name)}</Text>
-              <Text style={style.dateSkeleton}>DD/MM/YYYY</Text>
+              <Text style={styles.dateSkeleton}>DD/MM/YYYY</Text>
             </View>
             <Text style={styles.words}>...</Text>
           </View>
@@ -58,31 +83,31 @@ const styles = StyleSheet.create({
   body: {
     marginVertical: 20,
   },
-  words: { 
-    color: 'gray', 
-    fontWeight: 'bold', 
-    fontSize: 15 
+  words: {
+    color: 'gray',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
-  subtitle: { 
-    color: 'gray', 
-    fontWeight: '100', 
-    fontSize: 15 
+  subtitle: {
+    color: 'gray',
+    fontWeight: '100',
+    fontSize: 15,
   },
-  itemContainer: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-around', 
-    marginTop: 10 
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
   },
-  icon: { 
-    width: 40, 
-    height: 40 
+  icon: {
+    width: 40,
+    height: 40,
   },
   dateSkeleton: {
-    color: 'gray', 
-    fontWeight: 'bold', 
-    fontSize: 12, 
-    marginTop: 10
-  }
+    color: 'gray',
+    fontWeight: 'bold',
+    fontSize: 12,
+    marginTop: 10,
+  },
 });
 
 ListItem.propTypes = {

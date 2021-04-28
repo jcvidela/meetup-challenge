@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { CreateMeetup, CustomModal as Modal, WeatherInfo, Card, List, Button as FloattingButton } from '../components';
 import { useLoggedIn } from '../hooks/useLogged';
-import axios from 'axios';
+import api from '../api';
 
 import closeIcon from '../assets/cancel.png';
 
@@ -18,20 +18,20 @@ const HomeScreen = () => {
   }
 
   function retrieveMeetups() {
-    axios
-      .get('https://birras-santander.herokuapp.com/meetups')
-      .then((x) => setMeetups(x.data))
-      .catch((error) => console.log(error));
+    api
+      .getMeetups()
+      .then(setMeetups)
+      .catch(() => console.log('Error getting meetups'));
   }
 
   function handleCreateMeetup(data) {
-    axios
-      .post('https://birras-santander.herokuapp.com/meetups/create', data)
-      .then((meetup) => {
-        setMeetups(meetup.data);
+    api
+      .createMeetup(data)
+      .then((meetups) => {
+        setMeetups(meetups);
         onToggleModalVisbility();
       })
-      .catch((error) => console.log(error));
+      .catch(() => console.log('Error creating meetups'));
   }
 
   return (

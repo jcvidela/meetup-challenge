@@ -1,42 +1,13 @@
 import * as React from 'react';
 import { getFromStorage, removeFromStorage, saveOnStorage } from '../helpers';
-import { useFetch } from '../hooks/useFetch';
 
 const AppContext = React.createContext();
-const url = 'https://api.openweathermap.org/data/2.5/weather?q=buenos%20aires,ar&appid=1db3d08995d69e48a381491aaec0fe7c&units=metric';
-
 const AppProvider = ({ children }) => {
   const [isLogged, setIsLogged] = React.useState({
     username: '',
     active: false,
     role: null,
   });
-  const [weather, setWeather] = React.useState({
-    data: null,
-    loading: true,
-    error: false,
-  });
-  const { data, loading, error } = useFetch(url);
-
-  React.useEffect(() => {
-    if (data) {
-      setWeather({
-        data: {
-          temp: data.main.temp,
-          location: `${data.name}, ${data.sys.country}`,
-          desc: data.weather[0].description,
-        },
-        loading: false,
-        error: false,
-      });
-    } else if (error) {
-      setWeather({
-        data: null,
-        loading: false,
-        error: true,
-      });
-    }
-  }, [data, error]);
 
   function verifySession() {
     getFromStorage('session')
@@ -76,7 +47,6 @@ const AppProvider = ({ children }) => {
   }
 
   const state = {
-    weather,
     isLogged,
   };
 

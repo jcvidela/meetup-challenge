@@ -1,10 +1,35 @@
 import { capitalize } from 'lodash';
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useWeather } from '../hooks/useWeather';
+import api from '../api';
 
 const WeatherInfo = () => {
-  const { data, loading, error } = useWeather();
+  const [state, setState] = React.useState({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  const { data, loading, error } = state;
+
+  React.useEffect(() => {
+    api
+      .getWeather()
+      .then((data) =>
+        setState({
+          data,
+          loading: false,
+          error: null,
+        }),
+      )
+      .catch(() =>
+        setState({
+          data: null,
+          loadng: false,
+          error: 'Error getting weather',
+        }),
+      );
+  }, []);
 
   if (loading) {
     return (
