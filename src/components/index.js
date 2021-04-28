@@ -1,5 +1,4 @@
 export { default as FormWrapper } from './FormWrapper';
-export { default as Header } from './Header';
 export { default as HeaderRight } from './HeaderRight';
 export { default as CreateMeetup } from './CreateMeetup';
 export { default as CustomModal } from './CustomModal';
