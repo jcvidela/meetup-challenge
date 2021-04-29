@@ -1,30 +1,28 @@
 import * as React from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, Image } from 'react-native';
-import { Button } from '.';
+import { Button, CustomModal as Modal } from '.';
 import { removeFromStorage } from '../helpers';
 import { useNavigation } from '@react-navigation/native';
 import closeSessionIcon from '../assets/closession.png';
-
-// Test
-import { CustomModal as Modal } from '.';
 
 const HeaderRight = () => {
   const navigation = useNavigation();
   const [modalVisibility, setModalVisibility] = React.useState(false);
 
-  function onToggleModalVisbility() {
+  function toggleModalVisibility() {
     setModalVisibility(!modalVisibility);
   }
 
   function onConfirmPress() {
-    removeFromStorage('session').then(() => {
-      onToggleModalVisbility();
+    removeFromStorage('session')
+    .then(() => {
+      toggleModalVisibility();
       return navigation.navigate('AuthNavigator');
     });
   }
 
   function onCancelPress() {
-    return onToggleModalVisbility();
+    return toggleModalVisibility();
   }
 
   return (
@@ -38,7 +36,7 @@ const HeaderRight = () => {
         </View>
       </Modal>
 
-      <TouchableOpacity style={{ padding: 10 }} onPress={onToggleModalVisbility}>
+      <TouchableOpacity style={{ padding: 10 }} onPress={toggleModalVisibility}>
         <Image source={closeSessionIcon} style={styles.icon} />
       </TouchableOpacity>
     </>
@@ -46,27 +44,6 @@ const HeaderRight = () => {
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.7)',
-  },
-  modalView: {
-    margin: 20,
-    width: '80%',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   title: {
     textAlign: 'center',
     marginBottom: 20,
@@ -74,7 +51,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   icon: {
     width: 20,
@@ -84,11 +61,6 @@ const styles = StyleSheet.create({
   closeAppButton: {
     backgroundColor: 'red',
     width: 100,
-  },
-  buttonText: {
-    color: '#ffffff',
-    textAlign: 'center',
-    fontSize: 18,
   },
 });
 

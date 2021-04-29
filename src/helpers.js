@@ -12,12 +12,12 @@ import _ from 'lodash';
 export function computeBeer(amountOfBeer, amountOfPeople) {
   const quantityBeersPerPack = 6;
   let totalPacks = (amountOfPeople * amountOfBeer) / quantityBeersPerPack;
-  let rounded = Math.ceil(totalPacks);
-
+  let rounded = Math.ceil(totalPacks); // round up
   return rounded;
 }
 
 /**
+ * @param {number} currentWeather
  * @param {number} currentWeather
  * @returns {any}
  */
@@ -44,7 +44,7 @@ export function computeStock(currentWeather, amountOfPeople) {
 }
 
 /**
- * @param {word} string
+ * @param {string} word
  * @returns word with first letter capitalized
  */
 export function capitalize(string) {
@@ -61,7 +61,6 @@ export function validateFields(candidate, length) {
 }
 
 /**
- *
  * @param {*} item
  * @returns Promise
  */
@@ -78,7 +77,6 @@ export async function getFromStorage(item) {
 }
 
 /**
- *
  * @param {string} key
  * @param {object} data
  * @returns Promise
@@ -96,7 +94,6 @@ export async function saveOnStorage(key, data) {
 }
 
 /**
- *
  * @param {*} key
  * @returns Promise
  */

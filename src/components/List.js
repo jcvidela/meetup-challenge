@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Transitioning } from 'react-native-reanimated';
 import { ListItem } from '../components';
@@ -14,13 +14,16 @@ const List = ({ list }) => {
   }
 
   return (
-    <>
-      <Transitioning.View ref={ref} transition={transition} style={{ paddingBottom: 50 }}>
-        {list.map((item) => (
-          <ListItem item={item} handlePress={() => handlePress(item.id)} expanded={item.id === currentIndex} key={item.id} />
-        ))}
-      </Transitioning.View>
-    </>
+    <Transitioning.View ref={ref} transition={transition} style={{ paddingBottom: 50 }}>
+      {list.map((item) => (
+        <ListItem 
+          item={item} 
+          handlePress={() => handlePress(item.id)} 
+          expanded={item.id === currentIndex} 
+          key={item.id} 
+        />
+      ))}
+    </Transitioning.View>
   );
 };
 

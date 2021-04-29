@@ -1,23 +1,26 @@
 import * as React from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Loader } from '../../components'
 import { useFocusEffect } from '@react-navigation/core';
 import { getFromStorage } from '../../helpers';
 import { useLoggedIn } from '../../hooks/useLogged';
 
 const AuthLoadingScreen = ({ navigation }) => {
   const { verifySession } = useLoggedIn();
+  
   // return to previous view
   useFocusEffect(onVerifyUser);
 
   function onVerifyUser() {
     verifySession();
+    console.log('verifying...')
     getFromStorage('session')
       .then((response) => navigation.navigate(response ? 'RootStackNavigator' : 'SignInScreen'))
       .catch(() => navigation.navigate('SignInScreen'));
   }
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#6C16B9" />
+      <Loader />
     </View>
   );
 };

@@ -37,6 +37,22 @@ const ListItem = ({ item, expanded, handlePress }) => {
       );
   }, []);
 
+  if (loading) {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Text>Cargando...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Text>Hubo un error</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ marginVertical: 10 }}>
       <Card expanded={expanded}>

@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'rea
 import { CreateMeetup, CustomModal as Modal, WeatherInfo, Card, List, Button as FloattingButton } from '../components';
 import { useLoggedIn } from '../hooks/useLogged';
 import api from '../api';
-
 import closeIcon from '../assets/cancel.png';
 
 const HomeScreen = () => {
@@ -13,7 +12,7 @@ const HomeScreen = () => {
 
   React.useEffect(retrieveMeetups, []);
 
-  function onToggleModalVisbility() {
+  function toggleModalVisibility() {
     setModalVisibility(!modalVisibility);
   }
 
@@ -28,8 +27,8 @@ const HomeScreen = () => {
     api
       .createMeetup(data)
       .then((meetups) => {
-        setMeetups(meetups);
-        onToggleModalVisbility();
+        setMeetups(meetups); // update state
+        toggleModalVisibility(); // close modal
       })
       .catch(() => console.log('Error creating meetups'));
   }
@@ -37,8 +36,8 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Modal visible={modalVisibility} onDismiss={onToggleModalVisbility} transparent animationType="fade">
-          <TouchableOpacity onPress={onToggleModalVisbility}>
+        <Modal visible={modalVisibility} onDismiss={toggleModalVisibility} transparent animationType="fade">
+          <TouchableOpacity onPress={toggleModalVisibility}>
             <Image source={closeIcon} style={styles.closeIcon} />
           </TouchableOpacity>
 
@@ -65,7 +64,7 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      {isLogged.role === 'ADMIN' && <FloattingButton handlePress={onToggleModalVisbility} text="Crear Meetup" style={styles.floatting} />}
+      {isLogged.role === 'ADMIN' && <FloattingButton handlePress={toggleModalVisibility} text="Crear Meetup" style={styles.floatting} />}
     </View>
   );
 };

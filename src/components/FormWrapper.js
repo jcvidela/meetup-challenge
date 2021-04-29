@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const FormWrapper = ({ children, style }) => {
   return (
     <KeyboardAwareScrollView 
-      contentContainerStyle={style} 
+      contentContainerStyle={style}
       keyboardShouldPersistTaps="handled"
     >
       {children}

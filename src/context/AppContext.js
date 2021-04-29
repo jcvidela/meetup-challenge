@@ -11,14 +11,16 @@ const AppProvider = ({ children }) => {
 
   function verifySession() {
     getFromStorage('session')
-      .then((string) => JSON.parse(string))
-      .then((session) =>
+      .then((sessionString) => JSON.parse(sessionString))
+      .then((session) => {
+        if (!session) return console.log('null session');
         setIsLogged({
           username: session.username,
           active: true,
           role: session.username.toUpperCase() === 'ADMIN' ? 'ADMIN' : 'GUEST',
-        }),
-      );
+        });
+      })
+      .catch((error) => console.log(`Eror: ${error}`));
   }
 
   function setLoggedIn(formValues) {
@@ -38,12 +40,7 @@ const AppProvider = ({ children }) => {
   }
 
   function setLoggedOut() {
-    removeFromStorage('session').then(() =>
-      setIsLogged({
-        active: false,
-        role: null,
-      }),
-    );
+    removeFromStorage('session').then(() => setIsLogged({ active: false, role: null }));
   }
 
   const state = {
